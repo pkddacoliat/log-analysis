@@ -11,3 +11,7 @@ message Log {
   optional string referer = 6;
   optional string userAgent = 7;
 }
+
+message Result {
+  bool blacklisted = 1;
+}
