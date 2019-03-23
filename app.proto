@@ -2,13 +2,17 @@ syntax = "proto3";
 
 package loganalysis;
 
+service LogAnalysis {
+  rpc AnalyseLog(Log) returns (Result) {}
+}
+
 message Log {
   required string ipAddress = 1;
-  required string timeFinished = 2;
+  required string timeProcessed = 2;
   required string request = 3;
   required string statusCode = 4;
   required int64 objectSize = 5;
-  optional string referer = 6;
+  optional string referer = 6;AnalyseLog
   optional string userAgent = 7;
 }
 
