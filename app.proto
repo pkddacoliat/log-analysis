@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package loganalysis;
+
+message Log {
+  required string ipAddress = 1;
+  required string timeFinished = 2;
+  required string request = 3;
+  required string statusCode = 4;
+  required int64 objectSize = 5;
+  optional string referer = 6;
+  optional string userAgent = 7;
+}
