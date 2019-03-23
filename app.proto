@@ -7,13 +7,13 @@ service LogAnalysis {
 }
 
 message Log {
-  required string ipAddress = 1;
-  required string timeProcessed = 2;
-  required string request = 3;
-  required string statusCode = 4;
-  required int64 objectSize = 5;
-  optional string referer = 6;AnalyseLog
-  optional string userAgent = 7;
+  string ipAddress = 1;
+  string timeProcessed = 2;
+  string request = 3;
+  string statusCode = 4;
+  int64 objectSize = 5;
+  string referer = 6;
+  string userAgent = 7;
 }
 
 message Result {
