@@ -25,7 +25,7 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def AnalyseLog(self, request, context):
         blacklisted_ips = read_file()
-        return app_pb2.Result(bool=request.ipAddress in blacklisted_ips)
+        return app_pb2.Result(blacklisted=request.ipAddress in blacklisted_ips)
 
 
 def serve():
