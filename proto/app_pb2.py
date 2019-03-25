@@ -19,68 +19,71 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='loganalysis',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\tapp.proto\x12\x0bloganalysis\"\x8c\x01\n\x03Log\x12\x11\n\tipAddress\x18\x01 \x01(\t\x12\x15\n\rtimeProcessed\x18\x02 \x01(\t\x12\x0f\n\x07request\x18\x03 \x01(\t\x12\x12\n\nstatusCode\x18\x04 \x01(\t\x12\x12\n\nobjectSize\x18\x05 \x01(\x03\x12\x0f\n\x07referer\x18\x06 \x01(\t\x12\x11\n\tuserAgent\x18\x07 \x01(\t\"\x1d\n\x06Result\x12\x13\n\x0b\x62lacklisted\x18\x01 \x01(\x08\x32\x44\n\x0bLogAnalysis\x12\x35\n\nAnalyseLog\x12\x10.loganalysis.Log\x1a\x13.loganalysis.Result\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tapp.proto\x12\x0bloganalysis\" \n\x11\x41nalyseLogRequest\x12\x0b\n\x03log\x18\x01 \x01(\t\"S\n\x10\x41nalyseLogResult\x12\x15\n\ripBlacklisted\x18\x01 \x01(\x08\x12\x11\n\tipAddress\x18\x02 \x01(\t\x12\x15\n\rtimeProcessed\x18\x03 \x01(\t2\\\n\x0bLogAnalysis\x12M\n\nAnalyseLog\x12\x1e.loganalysis.AnalyseLogRequest\x1a\x1d.loganalysis.AnalyseLogResult\"\x00\x62\x06proto3')
 )
 
 
 
 
-_LOG = _descriptor.Descriptor(
-  name='Log',
-  full_name='loganalysis.Log',
+_ANALYSELOGREQUEST = _descriptor.Descriptor(
+  name='AnalyseLogRequest',
+  full_name='loganalysis.AnalyseLogRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='ipAddress', full_name='loganalysis.Log.ipAddress', index=0,
+      name='log', full_name='loganalysis.AnalyseLogRequest.log', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=26,
+  serialized_end=58,
+)
+
+
+_ANALYSELOGRESULT = _descriptor.Descriptor(
+  name='AnalyseLogResult',
+  full_name='loganalysis.AnalyseLogResult',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
     _descriptor.FieldDescriptor(
-      name='timeProcessed', full_name='loganalysis.Log.timeProcessed', index=1,
+      name='ipBlacklisted', full_name='loganalysis.AnalyseLogResult.ipBlacklisted', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ipAddress', full_name='loganalysis.AnalyseLogResult.ipAddress', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='request', full_name='loganalysis.Log.request', index=2,
+      name='timeProcessed', full_name='loganalysis.AnalyseLogResult.timeProcessed', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='statusCode', full_name='loganalysis.Log.statusCode', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='objectSize', full_name='loganalysis.Log.objectSize', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='referer', full_name='loganalysis.Log.referer', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='userAgent', full_name='loganalysis.Log.userAgent', index=6,
-      number=7, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -93,58 +96,27 @@ _LOG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=27,
-  serialized_end=167,
+  serialized_start=60,
+  serialized_end=143,
 )
 
-
-_RESULT = _descriptor.Descriptor(
-  name='Result',
-  full_name='loganalysis.Result',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='blacklisted', full_name='loganalysis.Result.blacklisted', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=169,
-  serialized_end=198,
-)
-
-DESCRIPTOR.message_types_by_name['Log'] = _LOG
-DESCRIPTOR.message_types_by_name['Result'] = _RESULT
+DESCRIPTOR.message_types_by_name['AnalyseLogRequest'] = _ANALYSELOGREQUEST
+DESCRIPTOR.message_types_by_name['AnalyseLogResult'] = _ANALYSELOGRESULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Log = _reflection.GeneratedProtocolMessageType('Log', (_message.Message,), dict(
-  DESCRIPTOR = _LOG,
+AnalyseLogRequest = _reflection.GeneratedProtocolMessageType('AnalyseLogRequest', (_message.Message,), dict(
+  DESCRIPTOR = _ANALYSELOGREQUEST,
   __module__ = 'app_pb2'
-  # @@protoc_insertion_point(class_scope:loganalysis.Log)
+  # @@protoc_insertion_point(class_scope:loganalysis.AnalyseLogRequest)
   ))
-_sym_db.RegisterMessage(Log)
+_sym_db.RegisterMessage(AnalyseLogRequest)
 
-Result = _reflection.GeneratedProtocolMessageType('Result', (_message.Message,), dict(
-  DESCRIPTOR = _RESULT,
+AnalyseLogResult = _reflection.GeneratedProtocolMessageType('AnalyseLogResult', (_message.Message,), dict(
+  DESCRIPTOR = _ANALYSELOGRESULT,
   __module__ = 'app_pb2'
-  # @@protoc_insertion_point(class_scope:loganalysis.Result)
+  # @@protoc_insertion_point(class_scope:loganalysis.AnalyseLogResult)
   ))
-_sym_db.RegisterMessage(Result)
+_sym_db.RegisterMessage(AnalyseLogResult)
 
 
 
@@ -154,16 +126,16 @@ _LOGANALYSIS = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=200,
-  serialized_end=268,
+  serialized_start=145,
+  serialized_end=237,
   methods=[
   _descriptor.MethodDescriptor(
     name='AnalyseLog',
     full_name='loganalysis.LogAnalysis.AnalyseLog',
     index=0,
     containing_service=None,
-    input_type=_LOG,
-    output_type=_RESULT,
+    input_type=_ANALYSELOGREQUEST,
+    output_type=_ANALYSELOGRESULT,
     serialized_options=None,
   ),
 ])

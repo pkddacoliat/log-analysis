@@ -3,19 +3,15 @@ syntax = "proto3";
 package loganalysis;
 
 service LogAnalysis {
-  rpc AnalyseLog(Log) returns (Result) {}
+  rpc AnalyseLog(AnalyseLogRequest) returns (AnalyseLogResult) {}
 }
 
-message Log {
-  string ipAddress = 1;
-  string timeProcessed = 2;
-  string request = 3;
-  string statusCode = 4;
-  int64 objectSize = 5;
-  string referer = 6;
-  string userAgent = 7;
+message AnalyseLogRequest {
+  string log = 1;
 }
 
-message Result {
-  bool blacklisted = 1;
+message AnalyseLogResult {
+  bool ipBlacklisted = 1;
+  string ipAddress = 2;
+  string timeProcessed = 3;
 }

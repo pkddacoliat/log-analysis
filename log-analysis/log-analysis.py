@@ -12,7 +12,7 @@ import app_pb2_grpc
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
-def read_file():
+def get_blacklisted_ips():
     blacklisted_ips = []
     f = open("blacklist.txt", "r")
     lines = f.readlines()
@@ -24,12 +24,16 @@ def read_file():
 class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def AnalyseLog(self, request, context):
-        blacklisted_ips = read_file()
-        return app_pb2.Result(blacklisted=request.ipAddress in blacklisted_ips)
+        blacklisted_ips = get_blacklisted_ips()
+        return app_pb2.AnalyseLogResult(
+            ipBlacklisted = request.log.split()[0] in blacklisted_ips, 
+            ipAddress = request.log.split()[0], 
+            timeProcessed = request.log.split()[3]
+            )
 
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers = 10))
     app_pb2_grpc.add_LogAnalysisServicer_to_server(LogAnalysisServicer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()

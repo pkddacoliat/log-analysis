@@ -16,8 +16,8 @@ class LogAnalysisStub(object):
     """
     self.AnalyseLog = channel.unary_unary(
         '/loganalysis.LogAnalysis/AnalyseLog',
-        request_serializer=app__pb2.Log.SerializeToString,
-        response_deserializer=app__pb2.Result.FromString,
+        request_serializer=app__pb2.AnalyseLogRequest.SerializeToString,
+        response_deserializer=app__pb2.AnalyseLogResult.FromString,
         )
 
 
@@ -37,8 +37,8 @@ def add_LogAnalysisServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'AnalyseLog': grpc.unary_unary_rpc_method_handler(
           servicer.AnalyseLog,
-          request_deserializer=app__pb2.Log.FromString,
-          response_serializer=app__pb2.Result.SerializeToString,
+          request_deserializer=app__pb2.AnalyseLogRequest.FromString,
+          response_serializer=app__pb2.AnalyseLogResult.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
