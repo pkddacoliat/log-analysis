@@ -1,3 +1,2 @@
 grpcio
 googleapis-common-protos
-redis

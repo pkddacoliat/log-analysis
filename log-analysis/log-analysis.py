@@ -2,6 +2,7 @@ from concurrent import futures
 import time
 import sys
 sys.path.insert(0, "../proto/")
+import logging
 
 import grpc
 
@@ -25,10 +26,17 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def AnalyseLog(self, request, context):
         blacklisted_ips = get_blacklisted_ips()
-        return app_pb2.AnalyseLogResult(
-            ipBlacklisted = request.log.split()[0] in blacklisted_ips, 
-            ipAddress = request.log.split()[0], 
-            timeProcessed = request.log.split()[3]
+        if request.log.split()[0] in blacklisted_ips:
+            return app_pb2.AnalyseLogResult (
+                ipBlacklisted = True, 
+                ipAddress = request.log.split()[0], 
+                timeProcessed = request.log.split()[3]
+            )
+        else:
+            return app_pb2.AnalyseLogResult (
+                ipBlacklisted = False, 
+                ipAddress = request.log.split()[0], 
+                timeProcessed = request.log.split()[3]
             )
 
 
@@ -46,4 +54,5 @@ def serve():
 
 
 if __name__ == "__main__":
+    logging.basicConfig()
     serve()
