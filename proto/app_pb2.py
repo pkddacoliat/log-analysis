@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='loganalysis',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\tapp.proto\x12\x0bloganalysis\" \n\x11\x41nalyseLogRequest\x12\x0b\n\x03log\x18\x01 \x01(\t\"S\n\x10\x41nalyseLogResult\x12\x15\n\ripBlacklisted\x18\x01 \x01(\x08\x12\x11\n\tipAddress\x18\x02 \x01(\t\x12\x15\n\rtimeProcessed\x18\x03 \x01(\t2\\\n\x0bLogAnalysis\x12M\n\nAnalyseLog\x12\x1e.loganalysis.AnalyseLogRequest\x1a\x1d.loganalysis.AnalyseLogResult\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tapp.proto\x12\x0bloganalysis\" \n\x11\x41nalyseLogRequest\x12\x0b\n\x03log\x18\x01 \x01(\t\"S\n\x10\x41nalyseLogResult\x12\x15\n\ripBlacklisted\x18\x01 \x01(\x08\x12\x11\n\tipAddress\x18\x02 \x01(\t\x12\x15\n\rtimeProcessed\x18\x03 \x01(\t\"\x1f\n\x0fSendEmailResult\x12\x0c\n\x04sent\x18\x01 \x01(\x08\x32\xa8\x01\n\x0bLogAnalysis\x12M\n\nAnalyseLog\x12\x1e.loganalysis.AnalyseLogRequest\x1a\x1d.loganalysis.AnalyseLogResult\"\x00\x12J\n\tSendEmail\x12\x1d.loganalysis.AnalyseLogResult\x1a\x1c.loganalysis.SendEmailResult\"\x00\x62\x06proto3')
 )
 
 
@@ -100,8 +100,40 @@ _ANALYSELOGRESULT = _descriptor.Descriptor(
   serialized_end=143,
 )
 
+
+_SENDEMAILRESULT = _descriptor.Descriptor(
+  name='SendEmailResult',
+  full_name='loganalysis.SendEmailResult',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='sent', full_name='loganalysis.SendEmailResult.sent', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=145,
+  serialized_end=176,
+)
+
 DESCRIPTOR.message_types_by_name['AnalyseLogRequest'] = _ANALYSELOGREQUEST
 DESCRIPTOR.message_types_by_name['AnalyseLogResult'] = _ANALYSELOGRESULT
+DESCRIPTOR.message_types_by_name['SendEmailResult'] = _SENDEMAILRESULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 AnalyseLogRequest = _reflection.GeneratedProtocolMessageType('AnalyseLogRequest', (_message.Message,), dict(
@@ -118,6 +150,13 @@ AnalyseLogResult = _reflection.GeneratedProtocolMessageType('AnalyseLogResult', 
   ))
 _sym_db.RegisterMessage(AnalyseLogResult)
 
+SendEmailResult = _reflection.GeneratedProtocolMessageType('SendEmailResult', (_message.Message,), dict(
+  DESCRIPTOR = _SENDEMAILRESULT,
+  __module__ = 'app_pb2'
+  # @@protoc_insertion_point(class_scope:loganalysis.SendEmailResult)
+  ))
+_sym_db.RegisterMessage(SendEmailResult)
+
 
 
 _LOGANALYSIS = _descriptor.ServiceDescriptor(
@@ -126,8 +165,8 @@ _LOGANALYSIS = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=145,
-  serialized_end=237,
+  serialized_start=179,
+  serialized_end=347,
   methods=[
   _descriptor.MethodDescriptor(
     name='AnalyseLog',
@@ -136,6 +175,15 @@ _LOGANALYSIS = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_ANALYSELOGREQUEST,
     output_type=_ANALYSELOGRESULT,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='SendEmail',
+    full_name='loganalysis.LogAnalysis.SendEmail',
+    index=1,
+    containing_service=None,
+    input_type=_ANALYSELOGRESULT,
+    output_type=_SENDEMAILRESULT,
     serialized_options=None,
   ),
 ])

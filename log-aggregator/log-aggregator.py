@@ -18,7 +18,7 @@ def run():
                 for line in f:
                     if len(line.split()) > 0:
                         response = stub.AnalyseLog(app_pb2.AnalyseLogRequest(log = line))
-                        print(response)
+                        # print(response)
                     time.sleep(0.2)
 
 

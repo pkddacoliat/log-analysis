@@ -1,5 +1,6 @@
 from concurrent import futures
 import time
+import datetime
 import sys
 sys.path.insert(0, "../proto/")
 import logging
@@ -8,6 +9,8 @@ import grpc
 
 import app_pb2
 import app_pb2_grpc
+
+import redis
 
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
@@ -22,22 +25,30 @@ def get_blacklisted_ips():
     return blacklisted_ips
 
 
+def time_difference(start_time, end_time):
+    start = datetime.datetime.strptime(start_time, "%d/%b/%Y:%H:%M:%S")
+    end = datetime.datetime.strptime(end_time, "%d/%b/%Y:%H:%M:%S")
+    difference = end - start
+    seconds = difference.total_seconds()
+    return int(seconds)
+
+
 class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def AnalyseLog(self, request, context):
         blacklisted_ips = get_blacklisted_ips()
+        result = app_pb2.AnalyseLogResult(
+            ipBlacklisted = False, 
+            ipAddress = request.log.split()[0], 
+            timeProcessed = request.log.split()[3].strip("[")
+        )
         if request.log.split()[0] in blacklisted_ips:
-            return app_pb2.AnalyseLogResult (
-                ipBlacklisted = True, 
-                ipAddress = request.log.split()[0], 
-                timeProcessed = request.log.split()[3]
-            )
-        else:
-            return app_pb2.AnalyseLogResult (
-                ipBlacklisted = False, 
-                ipAddress = request.log.split()[0], 
-                timeProcessed = request.log.split()[3]
-            )
+            result.ipBlacklisted = True
+            with grpc.insecure_channel('email-server:50052') as channel:
+                stub = app_pb2_grpc.LogAnalysisStub(channel)
+                response = stub.SendEmail(result)
+                print(response)
+        return result
 
 
 def serve():

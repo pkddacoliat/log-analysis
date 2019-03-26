@@ -6,6 +6,6 @@ COPY . /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-EXPOSE 50051
+EXPOSE 50052
 
-CMD ["python", "log-analysis.py"]
+CMD ["python", "email-server.py"]

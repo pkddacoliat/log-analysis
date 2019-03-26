@@ -19,6 +19,11 @@ class LogAnalysisStub(object):
         request_serializer=app__pb2.AnalyseLogRequest.SerializeToString,
         response_deserializer=app__pb2.AnalyseLogResult.FromString,
         )
+    self.SendEmail = channel.unary_unary(
+        '/loganalysis.LogAnalysis/SendEmail',
+        request_serializer=app__pb2.AnalyseLogResult.SerializeToString,
+        response_deserializer=app__pb2.SendEmailResult.FromString,
+        )
 
 
 class LogAnalysisServicer(object):
@@ -32,6 +37,13 @@ class LogAnalysisServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def SendEmail(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_LogAnalysisServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -39,6 +51,11 @@ def add_LogAnalysisServicer_to_server(servicer, server):
           servicer.AnalyseLog,
           request_deserializer=app__pb2.AnalyseLogRequest.FromString,
           response_serializer=app__pb2.AnalyseLogResult.SerializeToString,
+      ),
+      'SendEmail': grpc.unary_unary_rpc_method_handler(
+          servicer.SendEmail,
+          request_deserializer=app__pb2.AnalyseLogResult.FromString,
+          response_serializer=app__pb2.SendEmailResult.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
