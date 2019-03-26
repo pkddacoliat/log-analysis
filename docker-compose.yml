@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  log-analysis:
+    build: ./log-analysis
+    volumes:
+      - ./proto/:/proto
+    container_name: log-analysis
+    ports:
+      - "50051:50051"
+    depends_on:
+      - "redis"
+  log-aggregator:
+    build: ./log-aggregator
+    volumes:
+      - ./proto/:/proto
+    container_name: log-aggregator
+    depends_on:
+      - log-analysis
+      - redis
+    command: ["./wait-for-it.sh", "log-analysis:50051", "--", "python", "log-aggregator.py"]
+  redis:
+    image: redis:alpine
+    ports:
+     - "6379:6379"

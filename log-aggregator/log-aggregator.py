@@ -8,7 +8,7 @@ import app_pb2_grpc
 
 
 def run():
-    with grpc.insecure_channel("localhost:50051") as channel:
+    with grpc.insecure_channel("log-analysis:50051") as channel:
         stub = app_pb2_grpc.LogAnalysisStub(channel)
 
         with open("access.log") as f:
