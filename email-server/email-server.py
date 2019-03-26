@@ -11,6 +11,7 @@ import app_pb2
 import app_pb2_grpc
 
 import redis
+import smtplib
 
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
@@ -19,7 +20,27 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def SendEmail(self, request, context):
-        return app_pb2.SendEmailResult(sent = True)
+
+        # Account for testing purposes
+        user = "pkdd.microservices@gmail.com"
+        password = "4j&=@:AgTC#"
+
+        from_email = "pkdd.microservices@gmail.com"
+        to_email = "patrick.dacoliat@mycit.ie"
+        subject = "ALERT: Security Breach!!!"
+        text = "The system was breached by the following IP address: " + request.ipAddress
+        message = """From: %s\nTo: %s\nSubject: %s\n\n%s""" % (from_email, to_email, subject, text)
+        
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.ehlo()
+            server.starttls()
+            server.login(user, password)
+            server.sendmail(from_email, to_email, message)
+            server.close()
+            return app_pb2.SendEmailResult(sent = True)
+        except:
+            return app_pb2.SendEmailResult(sent = False)
 
 
 def serve():
@@ -27,7 +48,6 @@ def serve():
     app_pb2_grpc.add_LogAnalysisServicer_to_server(LogAnalysisServicer(), server)
     server.add_insecure_port("[::]:50052")
     server.start()
-    print("EMAIL SERVER RUNNING...")
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)

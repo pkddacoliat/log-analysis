@@ -9,6 +9,7 @@ services:
     ports:
       - "50051:50051"
     depends_on:
+      - email-server
       - redis
   log-aggregator:
     build: ./log-aggregator
@@ -17,7 +18,6 @@ services:
     container_name: log-aggregator
     depends_on:
       - log-analysis
-      - email-server
       - redis
     command: ["./wait-for-it.sh", "log-analysis:50051", "--", "python", "log-aggregator.py"]
   email-server:

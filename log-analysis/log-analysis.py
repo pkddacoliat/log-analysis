@@ -47,7 +47,6 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
             with grpc.insecure_channel('email-server:50052') as channel:
                 stub = app_pb2_grpc.LogAnalysisStub(channel)
                 response = stub.SendEmail(result)
-                print(response)
         return result
 
 
@@ -56,7 +55,6 @@ def serve():
     app_pb2_grpc.add_LogAnalysisServicer_to_server(LogAnalysisServicer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
-    print("SERVER RUNNING...")
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)
