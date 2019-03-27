@@ -4,7 +4,8 @@ package loganalysis;
 
 service LogAnalysis {
   rpc AnalyseLog(AnalyseLogRequest) returns (AnalyseLogResult) {}
-  rpc SendEmail(AnalyseLogResult) returns (SendEmailResult) {}
+  rpc StoreAlert(AnalyseLogResult) returns (StoreAlertResult) {}
+  rpc SendEmail(StoreAlertResult) returns (SendEmailResult) {}
 }
 
 message AnalyseLogRequest {
@@ -13,8 +14,12 @@ message AnalyseLogRequest {
 
 message AnalyseLogResult {
   bool ipBlacklisted = 1;
-  string ipAddress = 2;
-  string timeProcessed = 3;
+  string log = 2;
+}
+
+message StoreAlertResult {
+  bool stored = 1;
+  string log = 2;
 }
 
 message SendEmailResult {

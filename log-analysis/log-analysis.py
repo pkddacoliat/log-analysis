@@ -10,8 +10,6 @@ import grpc
 import app_pb2
 import app_pb2_grpc
 
-import redis
-
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -37,16 +35,22 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def AnalyseLog(self, request, context):
         blacklisted_ips = get_blacklisted_ips()
+
+        ipAddress = request.log.split()[0]
+        print("Analysing access log with an IP address:", ipAddress)
+
         result = app_pb2.AnalyseLogResult(
-            ipBlacklisted = False, 
-            ipAddress = request.log.split()[0], 
-            timeProcessed = request.log.split()[3].strip("[")
+            ipBlacklisted = False,
+            log = request.log
         )
-        if request.log.split()[0] in blacklisted_ips:
+
+        if ipAddress in blacklisted_ips:
             result.ipBlacklisted = True
-            with grpc.insecure_channel('email-server:50052') as channel:
+            with grpc.insecure_channel("alert-storing:50052") as channel:
                 stub = app_pb2_grpc.LogAnalysisStub(channel)
-                response = stub.SendEmail(result)
+                print("Creating alert for IP address:", ipAddress)
+                response = stub.StoreAlert(result)
+
         return result
 
 
@@ -55,6 +59,7 @@ def serve():
     app_pb2_grpc.add_LogAnalysisServicer_to_server(LogAnalysisServicer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
+    print("log-analysis server running...")
     try:
         while True:
             time.sleep(_ONE_DAY_IN_SECONDS)

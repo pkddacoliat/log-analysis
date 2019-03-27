@@ -19,9 +19,14 @@ class LogAnalysisStub(object):
         request_serializer=app__pb2.AnalyseLogRequest.SerializeToString,
         response_deserializer=app__pb2.AnalyseLogResult.FromString,
         )
+    self.StoreAlert = channel.unary_unary(
+        '/loganalysis.LogAnalysis/StoreAlert',
+        request_serializer=app__pb2.AnalyseLogResult.SerializeToString,
+        response_deserializer=app__pb2.StoreAlertResult.FromString,
+        )
     self.SendEmail = channel.unary_unary(
         '/loganalysis.LogAnalysis/SendEmail',
-        request_serializer=app__pb2.AnalyseLogResult.SerializeToString,
+        request_serializer=app__pb2.StoreAlertResult.SerializeToString,
         response_deserializer=app__pb2.SendEmailResult.FromString,
         )
 
@@ -31,6 +36,13 @@ class LogAnalysisServicer(object):
   pass
 
   def AnalyseLog(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def StoreAlert(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -52,9 +64,14 @@ def add_LogAnalysisServicer_to_server(servicer, server):
           request_deserializer=app__pb2.AnalyseLogRequest.FromString,
           response_serializer=app__pb2.AnalyseLogResult.SerializeToString,
       ),
+      'StoreAlert': grpc.unary_unary_rpc_method_handler(
+          servicer.StoreAlert,
+          request_deserializer=app__pb2.AnalyseLogResult.FromString,
+          response_serializer=app__pb2.StoreAlertResult.SerializeToString,
+      ),
       'SendEmail': grpc.unary_unary_rpc_method_handler(
           servicer.SendEmail,
-          request_deserializer=app__pb2.AnalyseLogResult.FromString,
+          request_deserializer=app__pb2.StoreAlertResult.FromString,
           response_serializer=app__pb2.SendEmailResult.SerializeToString,
       ),
   }

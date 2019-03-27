@@ -9,8 +9,8 @@ services:
     ports:
       - "50051:50051"
     depends_on:
-      - email-server
-      - redis
+      - alert-storing
+    command: ["./wait-for-it.sh", "alert-storing:50052", "--", "python", "log-analysis.py"]
   log-aggregator:
     build: ./log-aggregator
     volumes:
@@ -18,15 +18,25 @@ services:
     container_name: log-aggregator
     depends_on:
       - log-analysis
-      - redis
     command: ["./wait-for-it.sh", "log-analysis:50051", "--", "python", "log-aggregator.py"]
-  email-server:
-    build: ./email-server
+  alert-storing:
+    build: ./alert-storing
     volumes:
       - ./proto/:/proto
-    container_name: email-server
+    container_name: alert-storing
     ports:
       - "50052:50052"
+    depends_on:
+      - redis
+  # email-server:
+  #   build: ./email-server
+  #   volumes:
+  #     - ./proto/:/proto
+  #   container_name: email-server
+  #   ports:
+  #     - "50053:50053"
+  #   depends_on:
+  #     - alert-storing
   redis:
     image: redis:alpine
     ports:

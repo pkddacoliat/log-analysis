@@ -6,6 +6,6 @@ COPY . /app
 
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-EXPOSE 50053
+EXPOSE 50052
 
-CMD ["python", "email-server.py"]
+CMD ["python", "alert-storing.py"]
