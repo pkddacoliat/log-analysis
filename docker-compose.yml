@@ -27,16 +27,16 @@ services:
     ports:
       - "50052:50052"
     depends_on:
+      - email-server
       - redis
-  # email-server:
-  #   build: ./email-server
-  #   volumes:
-  #     - ./proto/:/proto
-  #   container_name: email-server
-  #   ports:
-  #     - "50053:50053"
-  #   depends_on:
-  #     - alert-storing
+    command: ["./wait-for-it.sh", "email-server:50053", "--", "python", "alert-storing.py"]
+  email-server:
+    build: ./email-server
+    volumes:
+      - ./proto/:/proto
+    container_name: email-server
+    ports:
+      - "50053:50053"
   redis:
     image: redis:alpine
     ports:

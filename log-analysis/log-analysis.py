@@ -23,14 +23,6 @@ def get_blacklisted_ips():
     return blacklisted_ips
 
 
-def time_difference(start_time, end_time):
-    start = datetime.datetime.strptime(start_time, "%d/%b/%Y:%H:%M:%S")
-    end = datetime.datetime.strptime(end_time, "%d/%b/%Y:%H:%M:%S")
-    difference = end - start
-    seconds = difference.total_seconds()
-    return int(seconds)
-
-
 class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
     def AnalyseLog(self, request, context):
@@ -41,6 +33,7 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
         result = app_pb2.AnalyseLogResult(
             ipBlacklisted = False,
+            timeAnalysed = datetime.datetime.now().strftime("%d/%b/%Y:%H:%M:%S"),
             log = request.log
         )
 
@@ -48,8 +41,8 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
             result.ipBlacklisted = True
             with grpc.insecure_channel("alert-storing:50052") as channel:
                 stub = app_pb2_grpc.LogAnalysisStub(channel)
-                print("Creating alert for IP address:", ipAddress)
                 response = stub.StoreAlert(result)
+                print("Creating alert for IP address:", ipAddress)
 
         return result
 

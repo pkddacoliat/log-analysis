@@ -16,14 +16,49 @@ import redis
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
+def time_difference(start_time, end_time):
+    start = datetime.datetime.strptime(start_time, "%d/%b/%Y:%H:%M:%S")
+    end = datetime.datetime.strptime(end_time, "%d/%b/%Y:%H:%M:%S")
+    difference = end - start
+    seconds = difference.total_seconds()
+    return int(seconds)
+
+
 class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
     
     def StoreAlert(self, request, context):
+
+        ipAddress = request.log.split()[0]
+        timeAnalysed = request.timeAnalysed
+
         result = app_pb2.StoreAlertResult(
-            stored = True,
+            stored = False,
+            timeAnalysed = timeAnalysed,
             log = request.log
         )
-        print("Log has been accepted into alert-storing server...")
+
+        try:
+            conn = redis.StrictRedis(host="redis", port=6379)
+            shouldSendAlert = False
+
+            if conn.get(ipAddress) is None:
+                conn.set(ipAddress, timeAnalysed + " " + request.log)
+                result.stored = True
+                shouldSendAlert = True
+            else:
+                if time_difference(timeAnalysed, conn.get(key).split()[0]) > _ONE_DAY_IN_SECONDS:
+                    conn.set(ipAddress, timeAnalysed + " " + request.log)
+                    result.stored = True
+                    shouldSendAlert = True
+            
+            if shouldSendAlert == True:
+                with grpc.insecure_channel("email-server:50053") as channel:
+                    stub = app_pb2_grpc.LogAnalysisStub(channel)
+                    response = stub.SendEmail(result)
+                    
+        except Exception as ex:
+            print("Error:", ex)
+
         return result
 
 

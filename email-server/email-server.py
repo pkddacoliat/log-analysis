@@ -26,8 +26,10 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
         from_email = "pkdd.microservices@gmail.com"
         to_email = "patrick.dacoliat@mycit.ie"
-        subject = "ALERT: Security Breach!!!"
-        text = "The system was breached by the following IP address: " + request.log.split()[0]
+        subject = "ALERT: Security Breach!"
+        text = "Dear Admin, \n\nThis e-mail serves as a notification about a breach in our system. " \
+                "Please see information about the breach below:\n\nDetected on: %s\nIP Address: %s\nFull Log: %s\nFrom,\nLog Analysis" \
+                % (request.timeAnalysed, request.log.split()[0], request.log)
         message = """From: %s\nTo: %s\nSubject: %s\n\n%s""" % (from_email, to_email, subject, text)
         
         try:
