@@ -37,6 +37,13 @@ services:
     container_name: email-server
     ports:
       - "50053:50053"
+  web-logs:
+    build: ./web-logs
+    container_name: web-logs
+    ports:
+      - "8080:5000"
+    depends_on:
+      - redis
   redis:
     image: redis:alpine
     ports:
