@@ -6,3 +6,8 @@ An application of a microservices architecture to a log analysis system that det
 ```bash
 python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. app.proto
 ```
+
+## To run the program:
+```bash
+docker-compose up --build
+```
