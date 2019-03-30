@@ -39,18 +39,24 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
 
         try:
             conn = redis.StrictRedis(host="redis", port=6379)
-            shouldSendAlert = False
 
-            if conn.get(ipAddress) is None:
-                conn.set(ipAddress, timeAnalysed + " " + request.log)
-                result.stored = True
-                shouldSendAlert = True
-            else:
-                if time_difference(timeAnalysed, conn.get(key).split()[0]) > _ONE_DAY_IN_SECONDS:
-                    conn.set(ipAddress, timeAnalysed + " " + request.log)
-                    result.stored = True
-                    shouldSendAlert = True
+            ipAddressFound = False
+            recentAlertTime = ""
+            shouldSendAlert = True
+
+            for key in conn.scan_iter():
+                if ipAddress in str(key):
+                    ipAddressFound = True
+                    recentAlertTime = str(key).split("_")[0]
             
+            if ipAddressFound == True:
+                if time_difference(timeAnalysed, recentAlertTime) > _ONE_DAY_IN_SECONDS:
+                    conn.set(timeAnalysed + "_" + ipAddress, request.log)
+                else:
+                    shouldSendAlert = False
+            else:
+                conn.set(timeAnalysed + "_" + ipAddress, request.log)
+
             if shouldSendAlert == True:
                 with grpc.insecure_channel("email-server:50053") as channel:
                     stub = app_pb2_grpc.LogAnalysisStub(channel)

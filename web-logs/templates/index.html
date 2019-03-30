@@ -19,14 +19,14 @@
             </tr>
         </thead>
         <tbody>
-            {% for x in alerts %}
+            {% for key, value in alerts.items() %}
             <tr>
-                <td> {{ x.split()[0].decode("utf-8") }} </td>
-                <td> {{ x.split()[1].decode("utf-8") }} </td>
-                <td> {{ x.split()[6].decode("utf-8") + " " + x.split()[7].decode("utf-8") + " " + x.split()[8].decode("utf-8") }} </td>
-                <td> {{ x.split()[4][1:].decode("utf-8") }} </td>
-                <td> {{ x.split()[9].decode("utf-8") }} </td>
-                <td> {{ x.split()[10].decode("utf-8") }} </td>
+                <td> {{ key[:20].decode("utf-8") }} </td>
+                <td> {{ value.split()[0].decode("utf-8") }} </td>
+                <td> {{ value.split()[5].decode("utf-8") + " " + value.split()[6].decode("utf-8") + " " + value.split()[7].decode("utf-8") }} </td>
+                <td> {{ value.split()[3][1:].decode("utf-8") }} </td>
+                <td> {{ value.split()[8].decode("utf-8") }} </td>
+                <td> {{ value.split()[9].decode("utf-8") }} </td>
             </tr>
             {% endfor %}
         </tbody>
