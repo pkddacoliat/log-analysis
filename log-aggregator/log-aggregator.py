@@ -16,8 +16,8 @@ def run():
             for line in f:
                 if len(line.split()) > 0:
                     response = stub.AnalyseLog(app_pb2.AnalyseLogRequest(log = line))
-                    if response.ipBlacklisted == True:
-                        print("IP address", response.log.split()[0], "is in the blacklist.")
+                    # if response.ipBlacklisted == True:
+                    #     print("IP address", response.log.split()[0], "is in the blacklist.")
                 time.sleep(0.2)
 
 

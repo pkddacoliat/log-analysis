@@ -9,13 +9,12 @@ Bootstrap(app)
 @app.route("/")
 def index():
     
-    alerts = []
+    alerts = {}
     try:
         conn = redis.StrictRedis(host="redis", port=6379)
         
         for key in conn.scan_iter():
-            log = conn.get(key)
-            alerts.append(log)
+            alerts[key] = conn.get(key)
 
     except Exception as ex:
         print(ex)

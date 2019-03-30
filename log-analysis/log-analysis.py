@@ -29,7 +29,7 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
         blacklisted_ips = get_blacklisted_ips()
 
         ipAddress = request.log.split()[0]
-        print("Analysing access log with an IP address:", ipAddress)
+        # print("Analysing access log with an IP address:", ipAddress)
 
         result = app_pb2.AnalyseLogResult(
             ipBlacklisted = False,
@@ -42,7 +42,7 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
             with grpc.insecure_channel("alert-storing:50052") as channel:
                 stub = app_pb2_grpc.LogAnalysisStub(channel)
                 response = stub.StoreAlert(result)
-                print("Creating alert for IP address:", ipAddress)
+                # print("Creating alert for IP address:", ipAddress)
 
         return result
 
