@@ -47,7 +47,7 @@ class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
             for key in conn.scan_iter():
                 if ipAddress in str(key):
                     ipAddressFound = True
-                    recentAlertTime = str(key).split("_")[0]
+                    recentAlertTime = key[:20]
             
             if ipAddressFound == True:
                 if time_difference(timeAnalysed, recentAlertTime) > _ONE_DAY_IN_SECONDS:
