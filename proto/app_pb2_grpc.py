@@ -14,7 +14,7 @@ class LogAnalysisStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.AnalyseLog = channel.unary_unary(
+    self.AnalyseLog = channel.stream_stream(
         '/loganalysis.LogAnalysis/AnalyseLog',
         request_serializer=app__pb2.AnalyseLogRequest.SerializeToString,
         response_deserializer=app__pb2.AnalyseLogResult.FromString,
@@ -35,7 +35,7 @@ class LogAnalysisServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def AnalyseLog(self, request, context):
+  def AnalyseLog(self, request_iterator, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -59,7 +59,7 @@ class LogAnalysisServicer(object):
 
 def add_LogAnalysisServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'AnalyseLog': grpc.unary_unary_rpc_method_handler(
+      'AnalyseLog': grpc.stream_stream_rpc_method_handler(
           servicer.AnalyseLog,
           request_deserializer=app__pb2.AnalyseLogRequest.FromString,
           response_serializer=app__pb2.AnalyseLogResult.SerializeToString,

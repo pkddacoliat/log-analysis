@@ -3,7 +3,7 @@ syntax = "proto3";
 package loganalysis;
 
 service LogAnalysis {
-  rpc AnalyseLog(AnalyseLogRequest) returns (AnalyseLogResult) {}
+  rpc AnalyseLog(stream AnalyseLogRequest) returns (stream AnalyseLogResult) {}
   rpc StoreAlert(AnalyseLogResult) returns (StoreAlertResult) {}
   rpc SendEmail(StoreAlertResult) returns (SendEmailResult) {}
 }

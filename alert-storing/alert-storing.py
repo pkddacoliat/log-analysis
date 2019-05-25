@@ -27,7 +27,6 @@ def time_difference(start_time, end_time):
 class LogAnalysisServicer(app_pb2_grpc.LogAnalysisServicer):
     
     def StoreAlert(self, request, context):
-
         ipAddress = request.log.split()[0]
         timeAnalysed = request.timeAnalysed
 

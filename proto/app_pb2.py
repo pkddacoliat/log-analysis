@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='loganalysis',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\tapp.proto\x12\x0bloganalysis\" \n\x11\x41nalyseLogRequest\x12\x0b\n\x03log\x18\x01 \x01(\t\"L\n\x10\x41nalyseLogResult\x12\x15\n\ripBlacklisted\x18\x01 \x01(\x08\x12\x14\n\x0ctimeAnalysed\x18\x02 \x01(\t\x12\x0b\n\x03log\x18\x03 \x01(\t\"E\n\x10StoreAlertResult\x12\x0e\n\x06stored\x18\x01 \x01(\x08\x12\x14\n\x0ctimeAnalysed\x18\x02 \x01(\t\x12\x0b\n\x03log\x18\x03 \x01(\t\"\x1f\n\x0fSendEmailResult\x12\x0c\n\x04sent\x18\x01 \x01(\x08\x32\xf6\x01\n\x0bLogAnalysis\x12M\n\nAnalyseLog\x12\x1e.loganalysis.AnalyseLogRequest\x1a\x1d.loganalysis.AnalyseLogResult\"\x00\x12L\n\nStoreAlert\x12\x1d.loganalysis.AnalyseLogResult\x1a\x1d.loganalysis.StoreAlertResult\"\x00\x12J\n\tSendEmail\x12\x1d.loganalysis.StoreAlertResult\x1a\x1c.loganalysis.SendEmailResult\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tapp.proto\x12\x0bloganalysis\" \n\x11\x41nalyseLogRequest\x12\x0b\n\x03log\x18\x01 \x01(\t\"L\n\x10\x41nalyseLogResult\x12\x15\n\ripBlacklisted\x18\x01 \x01(\x08\x12\x14\n\x0ctimeAnalysed\x18\x02 \x01(\t\x12\x0b\n\x03log\x18\x03 \x01(\t\"E\n\x10StoreAlertResult\x12\x0e\n\x06stored\x18\x01 \x01(\x08\x12\x14\n\x0ctimeAnalysed\x18\x02 \x01(\t\x12\x0b\n\x03log\x18\x03 \x01(\t\"\x1f\n\x0fSendEmailResult\x12\x0c\n\x04sent\x18\x01 \x01(\x08\x32\xfa\x01\n\x0bLogAnalysis\x12Q\n\nAnalyseLog\x12\x1e.loganalysis.AnalyseLogRequest\x1a\x1d.loganalysis.AnalyseLogResult\"\x00(\x01\x30\x01\x12L\n\nStoreAlert\x12\x1d.loganalysis.AnalyseLogResult\x1a\x1d.loganalysis.StoreAlertResult\"\x00\x12J\n\tSendEmail\x12\x1d.loganalysis.StoreAlertResult\x1a\x1c.loganalysis.SendEmailResult\"\x00\x62\x06proto3')
 )
 
 
@@ -219,7 +219,7 @@ _LOGANALYSIS = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   serialized_start=243,
-  serialized_end=489,
+  serialized_end=493,
   methods=[
   _descriptor.MethodDescriptor(
     name='AnalyseLog',
